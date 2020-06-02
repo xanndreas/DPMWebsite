@@ -40,10 +40,10 @@ class Login extends CI_Controller
 
             if ($exc > 0) {
                 $this->session->set_flashdata('flash-data', 'Berhasil Sign Up');
-                redirect('login');
+                redirect('login/register');
             } else {
                 $this->session->set_flashdata('flash-data', 'Maaf Anda Kurang Beruntung, Please Try Again');
-                redirect('login');
+                redirect('login/register');
             }
         } elseif ($nim != $cek->NIM) {
             if ($cek1->EMAIL != $mail) {
@@ -57,18 +57,18 @@ class Login extends CI_Controller
 
                 if ($exc > 0) {
                     $this->session->set_flashdata('flash-data', 'Berhasil Sign Up');
-                    redirect('login');
+                    redirect('login/register');
                 } else {
                     $this->session->set_flashdata('flash-data', 'Maaf Anda Kurang Beruntung, Please Try Again');
-                    redirect('login');
+                    redirect('login/register');
                 }
             } else {
                 $this->session->set_flashdata('flash-data', 'Email sudah terpakai');
-                redirect('login');
+                redirect('login/register');
             }
         } else {
             $this->session->set_flashdata('flash-data', 'Nim sudah terpakai');
-            redirect('login');
+            redirect('login/register');
         }
     }
 
@@ -99,6 +99,10 @@ class Login extends CI_Controller
     public function Ladmin()
     {
         $this->load->view('user/login/login_admin');
+    }
+    public function register()
+    {
+        $this->load->view('user/login/register');
     }
     public function signInAdmin()
     {
