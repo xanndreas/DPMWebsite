@@ -9,11 +9,19 @@
 <script type="text/javascript" src="<?= base_url() ?>js/jquery-scrolltofixed.js"></script>
 <script type="text/javascript" src="<?= base_url() ?>js/jquery.nav.js"></script>
 <script type="text/javascript" src="<?= base_url() ?>js/jquery.easing.1.3.js"></script>
+<script type="text/javascript" src="<?= base_url() ?>assets/css/vendors/datatables.net/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="<?= base_url() ?>assets/css/vendors/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
 <script type="text/javascript" src="<?= base_url() ?>js/jquery.isotope.js"></script>
 <script src="<?= base_url() ?>js/fancybox/jquery.fancybox.pack.js" type="text/javascript"></script>
 <script type="text/javascript" src="<?= base_url() ?>js/wow.js"></script>
 <!-- custom js here -->
 <script type="text/javascript" src="<?= base_url() ?>js/custom.js"></script>
+
+<script>
+    $(document).ready(function() {
+        $('#data-invent').DataTable();
+    });
+</script>
 
 </body>
 

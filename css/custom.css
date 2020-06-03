@@ -42,3 +42,57 @@
 .btn-input-home:hover {
     color: wheat;
 }
+
+.table-bordered {
+    margin: 25px 0!important;
+    border: 0px;
+    border-radius: 5px 5px 0 0;
+    overflow: hidden;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+}
+
+.table-bordered thead tr {
+    background-color: #000000;
+    color: #ffffff;
+    text-align: left;
+    font-weight: bold;
+}
+
+.table-bordered th,
+.table-bordered td {
+    padding: 20px 20px!important;
+}
+
+.table-bordered>thead>tr>td,
+.table-bordered>tbody>tr>td {
+    border: 0;
+}
+
+.table-bordered tbody tr:nth-of-type(even) {
+    background-color: #ebebeb;
+}
+
+.pagination>.active>a {
+    background-color: #000;
+    border-color: #000;
+}
+
+table.dataTable thead .sorting {
+    background: url('img/sort_both.png') no-repeat center right;
+}
+
+table.dataTable thead .sorting_asc {
+    background: url('img/sort_asc.png') no-repeat center right;
+}
+
+table.dataTable thead .sorting_desc {
+    background: url('img/sort_desc.png') no-repeat center right;
+}
+
+table.dataTable thead .sorting_asc_disabled {
+    background: url('img/sort_asc_disabled.png') no-repeat center right;
+}
+
+table.dataTable thead .sorting_desc_disabled {
+    background: url('img/sort_desc_disabled.png') no-repeat center right;
+}
