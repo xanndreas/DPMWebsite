@@ -1,5 +1,5 @@
 <div class="container">
-    <div class="footer_bottom"><span>2019 © Copyright reserved </span> </div>
+    <div class="footer_bottom"><span>2020 © Copyright reserved </span> </div>
 </div>
 </footer>
 

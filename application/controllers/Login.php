@@ -57,7 +57,7 @@ class Login extends CI_Controller
 
                 if ($exc > 0) {
                     $this->session->set_flashdata('flash-data', 'Berhasil Sign Up');
-                    redirect('login/register');
+                    redirect('login');
                 } else {
                     $this->session->set_flashdata('flash-data', 'Maaf Anda Kurang Beruntung, Please Try Again');
                     redirect('login/register');

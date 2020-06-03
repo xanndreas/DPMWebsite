@@ -19,7 +19,7 @@
 							<input type="text" name="nim_input" class="form-control form-content" id="NIM-input" maxlength="10" value="<?= $ud['nim']; ?>" readonly>
 						</div>
 						<div class="form-group">
-							<label for="Kategori-Input">Nama Organisasi Kemahasisawaan Intra</label>
+							<label for="Kategori-Input">Asal Organisasi Anda </label>
 							<select name="oki_input" class="form-control form-content" id="organisasi-input" required>
 								<option value="none" selected>Pilih Nama Organisasi Kemahasisawaan Intra</option>
 								<?php
@@ -28,8 +28,8 @@
 								<?php } ?>
 							</select>
 						</div>
-						<div id="kategori" class="form-group">
-							<label id="kategori-title" for="Kategori-Input">Kategori</label>
+						<div class="form-group">
+							<label id="kategori-title" for="Kategori-Input">Kategori Aspirasi</label>
 							<select name="kategori_input" class="form-control form-content" id="kategori-input" required>
 								<option value="" selected>Pilih Kategori</option>
 								<?php foreach ($kategori as $key) { ?>

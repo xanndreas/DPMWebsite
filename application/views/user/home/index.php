@@ -193,6 +193,7 @@
                         <div>
                             <a class="fancybox" href="<?= base_url() ?>uploads/<?= $key->GAL_NAMA ?>">
                                 <h2><span><?= $key->NAMA_ACARA ?></span></h2>
+                                <p><?= $key->KONTEN ?></p>
                             </a>
                         </div>
                     </figcaption>
@@ -277,7 +278,22 @@
                     <div class="date-title">
                         <span>2006</span>
                     </div>
+                    <div class="row">
+                        <div class="col-sm-6 news-item right">
+                            <div class="news-content">
+                                <div class="date">
+                                    <p>4</p>
+                                </div>
+                                <h2 class="news-title">Dewan Perwakilan Mahasiswa (DPM)</h2>
+                                <p>Dewan Perwakilan Mahasiswa Politeknik Negeri Malang adalah Lembaga tinggi yang mempunyai fungsi sebagai lembaga legislatif Tertinggi ...</p>
+                                <a class="read-more" href="#">Read More</a>
+                            </div>
+                        </div>
+                    </div>
 
+                    <div class="date-title">
+                        <span>Now</span>
+                    </div>
                 </div>
             </div>
         </section>
