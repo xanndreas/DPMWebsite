@@ -44,7 +44,7 @@ class Histori extends CI_Controller
 		$data['ud'] = $this->session->userdata('admin_login');
 		$data['main_view'] = 'admin/log';
 		$id = 1;
-		$data['asp'] = $this->a->getASPbyStatus('aspirasi_view','DELETED_STATUS',$id);
+		$data['asp'] = $this->a->getAspirasi()->result();
 		$this->load->view('admin/dashboard', $data);
 	}
 	public function handleAllAction($req = null)

@@ -30,7 +30,7 @@ class Peminjaman extends CI_Controller
 		$data['ud'] = $this->session->userdata('admin_login');
 		$data['main_view'] = 'admin/peminjaman';
 		$data['a'] = $this->a->get('list_alat')->result();
-		$data['pj'] = $this->a->get('peminjaman_view')->result();
+		$data['pj'] = $this->a->getPeminjaman()->result();
 		
 		$this->load->view('admin/dashboard', $data);
 	}

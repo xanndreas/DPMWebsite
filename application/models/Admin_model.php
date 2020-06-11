@@ -64,8 +64,8 @@ class admin_model extends CI_Model
     public function getProdi()
     {
         $this->db->distinct();
-        $this->db->select('PRODI');
-        return $this->db->get('aspirasi_view')->result();
+        $this->db->select("IF(aspirasi.NIM like '__4172%','TI','MI') AS PRODI");
+        return $this->db->get('aspirasi')->result();
     }
     public function getASP()
     {
@@ -97,6 +97,48 @@ class admin_model extends CI_Model
         $this->db->where('id_peminjaman', $id);
         return $this->db->get('plot_detail');
     }
+    //view aspirasi
+
+    public function getAspirasi()
+    {
+        $field = "aspirasi.ASP_ID AS ASP_ID,aspirasi.KAT_ID AS KAT_ID,aspirasi.NIM AS NIM,aspirasi.OKI_ID AS OKI_ID,aspirasi.KONTEN AS KONTEN,aspirasi.STATUS AS STATUS,aspirasi.DATE AS DATE,aspirasi.DELETED_STATUS AS DELETED_STATUS, IF(aspirasi.NIM like '__4172%','TI','MI') AS PRODI,kategori.KAT_NAMA AS KAT_NAMA,oki.OKI_NAMA AS OKI_NAMA";
+        $this->db->join('kategori', 'kategori.KAT_ID = aspirasi.KAT_ID', 'left');
+        $this->db->join('oki', 'oki.OKI_ID = aspirasi.OKI_ID', 'left');
+        $this->db->where('DELETED_STATUS', 0);
+        $this->db->select($field);
+        return $this->db->get('aspirasi');
+    }
+
+    public function getAspirasiPrint($field_id, $id)
+    {
+        $field = "aspirasi.ASP_ID AS ASP_ID,aspirasi.KAT_ID AS KAT_ID,aspirasi.NIM AS NIM,aspirasi.OKI_ID AS OKI_ID,aspirasi.KONTEN AS KONTEN,aspirasi.STATUS AS STATUS,aspirasi.DATE AS DATE,aspirasi.DELETED_STATUS AS DELETED_STATUS, IF(aspirasi.NIM like '__4172%','TI','MI') AS PRODI,kategori.KAT_NAMA AS KAT_NAMA,oki.OKI_NAMA AS OKI_NAMA";
+        $this->db->join('kategori', 'kategori.KAT_ID = aspirasi.KAT_ID', 'left');
+        $this->db->join('oki', 'oki.OKI_ID = aspirasi.OKI_ID', 'left');
+        $this->db->where($field_id, $id);
+        $this->db->where('DELETED_STATUS', 0);
+        $this->db->select($field);
+        return $this->db->get('aspirasi')->result_array();
+    }
+
+    // view users
+
+    public function getUsers()
+    {
+        $field = "users.NIM AS NIM,users.NAMA AS NAMA,users.PASSWORD AS PASSWORD,users.EMAIL AS EMAIL,if(users.NIM like '__4172%','TI','MI') AS PRODI";
+        $this->db->select($field);
+        return $this->db->get('users');
+    }
+
+    // view peminjaman 
+
+    public function getPeminjaman()
+    {
+        $field = "plot.ID_PEMINJAMAN AS ID_PEMINJAMAN,list_alat.ALAT_NAMA AS ALAT_NAMA,plot_detail.JUMLAH AS JUMLAH,plot.NAMA_PEMINJAM AS NAMA_PEMINJAM,plot.NAMA_ORGANISASI AS NAMA_ORGANISASI,plot.TANGGAL_PLOT AS TANGGAL_PLOT,plot.TANGGAL_PEMINJAMAN AS TANGGAL_PEMINJAMAN,plot.TANGGAL_PENGEMBALIAN AS TANGGAL_PENGEMBALIAN,plot.UNTUK_KEPERLUAN AS UNTUK_KEPERLUAN,plot.JAMINAN AS JAMINAN,plot.STATUS AS STATUS";
+        $this->db->join('list_alat', 'plot_detail.ALAT_ID = list_alat.ALAT_ID', 'left');
+        $this->db->join('plot', 'plot_detail.ID_PEMINJAMAN = plot.ID_PEMINJAMAN', 'left');
+        $this->db->select($field);
+        return $this->db->get('plot_detail');
+    }
 
     //Gallery Function
     public function deleteGallery($id)
@@ -118,8 +160,8 @@ class admin_model extends CI_Model
     public function modal($id)
     {
         return $this->db->query("SELECT * FROM plot_detail as a 
-        JOIN plot as b ON a.ID_PEMINJAMAN = b.ID_PEMINJAMAN
-        JOIN list_alat as c ON a.ALAT_ID = c.ALAT_ID
-        WHERE a.ID_PEMINJAMAN = $id and c.ALAT_ID = a.ALAT_ID");
+        JOIN plot as b ON aspirasi.ID_PEMINJAMAN = b.ID_PEMINJAMAN
+        JOIN list_alat as c ON aspirasi.ALAT_ID = c.ALAT_ID
+        WHERE aspirasi.ID_PEMINJAMAN = $id and c.ALAT_ID = aspirasi.ALAT_ID");
     }
 }

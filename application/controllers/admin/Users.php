@@ -23,7 +23,7 @@ class Users extends CI_Controller
     {
         $data['ud'] = $this->session->userdata('admin_login');
         $data['main_view'] = 'admin/users';
-        $data['usrs'] = $this->a->get('users_prodi_view')->result();
+        $data['usrs'] = $this->a->getUsers()->result();
         $this->load->view('admin/dashboard', $data);
     }
 

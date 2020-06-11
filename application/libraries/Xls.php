@@ -132,7 +132,7 @@ class Xls
                 }
             }
             $filename = "Barang Pinjaman " . date("Y-m-d H:i:s");
-        }elseif ($type == 'kategori') {
+        } elseif ($type == 'kategori') {
             $spreadsheet->getActiveSheet()->getColumnDimension("B")->setWidth("20");
             $spreadsheet->getActiveSheet()->getColumnDimension("C")->setWidth("18");
             $spreadsheet->getActiveSheet()->getColumnDimension("D")->setAutoSize('30');
@@ -187,17 +187,15 @@ class Xls
             $nomor = 1;
 
             foreach ($data as $keys) {
-                foreach ($keys as $key) {
-                    foreach ($key as $ke) {
-                        $spreadsheet->setActiveSheetIndex(0)
-                            ->setCellValue('A' . $kolom, $nomor)
-                            ->setCellValue('B' . $kolom, $ke["NIM"])
-                            ->setCellValue('C' . $kolom, $ke["KAT_NAMA"])
-                            ->setCellValue('D' . $kolom, $ke["KONTEN"])
-                            ->setCellValue('E' . $kolom, $ke["DATE"]);
-                        $kolom++;
-                        $nomor++;
-                    }
+                foreach ($keys as $ke) {
+                    $spreadsheet->setActiveSheetIndex(0)
+                        ->setCellValue('A' . $kolom, $nomor)
+                        ->setCellValue('B' . $kolom, $ke["NIM"])
+                        ->setCellValue('C' . $kolom, $ke["KAT_NAMA"])
+                        ->setCellValue('D' . $kolom, $ke["KONTEN"])
+                        ->setCellValue('E' . $kolom, $ke["DATE"]);
+                    $kolom++;
+                    $nomor++;
                 }
             }
             $filename = "Prodi " . date("Y-m-d H:i:s");

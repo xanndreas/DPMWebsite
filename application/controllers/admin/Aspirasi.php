@@ -21,8 +21,7 @@ class Aspirasi extends CI_Controller
 	{
 		$data['ud'] = $this->session->userdata('admin_login');
 		$data['main_view'] = 'admin/aspirasi';
-		$id = 0;
-		$data['asp'] = $this->a->getASPbyStatus('aspirasi_view','DELETED_STATUS',$id);
+		$data['asp'] = $this->a->getAspirasi()->result();
 		$data['kategori'] = $this->a->get('kategori')->result();
 		$data['prodi'] = $this->a->getProdi();
 		$this->load->view('admin/dashboard', $data);
@@ -95,7 +94,7 @@ class Aspirasi extends CI_Controller
 		$id = $this->input->post("kategori");
 		// $check = $this->a->get('aspirasi_view')->result();
 		$__DATA = array();
-		$datas = $this->a->getASPData('aspirasi_view', 'KAT_NAMA', $id);
+		$datas = $this->a->getAspirasiPrint('KAT_NAMA', $id);
 		$__DATA["data"][] = $datas;
 		$this->xls->export_xls($__DATA, 'kategori');
 	}
@@ -105,7 +104,13 @@ class Aspirasi extends CI_Controller
 		$id = $this->input->post("prodi");
 		// $check = $this->a->get('aspirasi_view')->result();
 		$__DATA = array();	
-		$datas = $this->a->getASPData('aspirasi_view', 'PRODI', $id);
+		$datas = array();	
+		$dt = $this->a->getAspirasi()->result_array();
+		foreach($dt as $d){
+			if($d['PRODI'] == $id){
+				$datas += $d;
+			}
+		}
 		var_dump($datas);
 		$__DATA["data"][] = $datas;
 		$this->xls->export_xls($__DATA, 'prodi');
