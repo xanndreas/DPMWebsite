@@ -11,7 +11,8 @@ class Aspirasi extends CI_Controller
 		$this->load->model('admin_model', 'a');
 		$this->load->library('xls', 'xls');
 		$a = $this->session->userdata('admin_login');
-		if ($a == null) {
+		$b = $this->session->userdata('admin_login')['role'];
+		if ($b == '2') {
 			redirect('admin/login');
 		}
 	}
@@ -20,7 +21,10 @@ class Aspirasi extends CI_Controller
 	{
 		$data['ud'] = $this->session->userdata('admin_login');
 		$data['main_view'] = 'admin/aspirasi';
-		$data['asp'] = $this->a->getASP('0')->result();
+		$id = 0;
+		$data['asp'] = $this->a->getASPbyStatus('aspirasi_view','DELETED_STATUS',$id);
+		$data['kategori'] = $this->a->get('kategori')->result();
+		$data['prodi'] = $this->a->getProdi();
 		$this->load->view('admin/dashboard', $data);
 	}
 
@@ -30,20 +34,28 @@ class Aspirasi extends CI_Controller
 			$this->del_aspirasi();
 		} else if ($_POST['request'] == 'print') {
 			$this->print_aspirasi();
+		} else if ($_POST['request'] == 'printKategori') {
+			$this->printKategori();
+		} else if ($_POST['request'] == 'printProdi') {
+			$this->printProdi();
 		}
 	}
 	public function del_aspirasi()
 	{
-
 		$dt = $this->input->post('pilih');
 		$jl = count($dt);
 		if ($jl != 0) {
 			for ($i = 0; $i < $jl; $i++) {
-				$this->a->delete('ASP_ID', $dt[$i], 'aspirasi');
+				$data = array(
+					'DELETED_STATUS' => 1
+				);
+				$where = "ASP_ID = " . $dt[$i];
+				$this->a->update('aspirasi',$data, $where);
 			}
 		} else {
 			redirect('admin/aspirasi');
 		}
+		$this->session->set_flashdata('success',"Success Delete Aspirasi");
 		redirect('admin/aspirasi');
 	}
 	public function print_aspirasi()
@@ -77,6 +89,28 @@ class Aspirasi extends CI_Controller
 		}
 		$this->xls->export_xls($__DATA, 'aspirasi');
 	}
+
+	public function printKategori()
+	{
+		$id = $this->input->post("kategori");
+		// $check = $this->a->get('aspirasi_view')->result();
+		$__DATA = array();
+		$datas = $this->a->getASPData('aspirasi_view', 'KAT_NAMA', $id);
+		$__DATA["data"][] = $datas;
+		$this->xls->export_xls($__DATA, 'kategori');
+	}
+
+	public function printProdi()
+	{
+		$id = $this->input->post("prodi");
+		// $check = $this->a->get('aspirasi_view')->result();
+		$__DATA = array();	
+		$datas = $this->a->getASPData('aspirasi_view', 'PRODI', $id);
+		var_dump($datas);
+		$__DATA["data"][] = $datas;
+		$this->xls->export_xls($__DATA, 'prodi');
+	}
+
 	public function updateAspirasiStatus($id)
 	{
 		$where = "ASP_ID = " . $id;

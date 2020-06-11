@@ -36,7 +36,8 @@ class Galeri extends CI_Controller
 
 		if (!$this->upload->do_upload('gambar')) {
 			$error = array('error' => $this->upload->display_errors());
-			var_dump($error);
+			$this->session->set_flashdata('success',"Gagal Tambah Galeri");
+			redirect('admin/galeri', 'refresh');
 		} else {
 			$upload_data = $this->upload->data();
 			$ins = array(
@@ -46,16 +47,43 @@ class Galeri extends CI_Controller
 				'GAL_NAMA' => $upload_data['file_name'],
 			);
 			$this->a->insert('galeri', $ins);
+			$this->session->set_flashdata('success',"Success Tambah Galeri");
 			redirect('admin/galeri', 'refresh');
 		}
 	}
-	public function upd_galeri()
+	public function editGaleri()
 	{
-		# code...
+		$acara = $this->input->post('namaacara');
+		$konten = $this->input->post('kontenacara');
+		$komisi = $this->input->post('komisi');
+		$id = $this->input->post('id');
+		$config['upload_path'] = './uploads/';
+		$config['allowed_types'] = 'gif|jpg|png';
+
+		$this->load->library('upload', $config);
+		if (!$this->upload->do_upload('gambar')) {
+			$error = array('error' => $this->upload->display_errors());
+			var_dump($error);
+		} else {
+			$upload_data = $this->upload->data();
+			$ins = array(
+				'NAMA_ACARA' => $acara,
+				'KONTEN' => $konten,
+				'KOMISI' => $komisi,
+				'GAL_NAMA' => $upload_data['file_name'],
+			);
+			$where = array(
+				'GALERI_ID' => $id,
+			);
+			$this->a->update('galeri', $ins, $where);
+			$this->session->set_flashdata('success',"Success Update Galeri");
+			redirect('admin/galeri', 'refresh');
+		}
 	}
 	public function del_galeri($id)
 	{
 		$this->a->delete('GALERI_ID', $id, 'galeri');
+		$this->session->set_flashdata('success',"Success hapus Galeri");
 		redirect('admin/galeri', 'refresh');
 	}
 }

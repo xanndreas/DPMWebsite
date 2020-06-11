@@ -41,7 +41,6 @@
           </div>
 
           <div class="clearfix"></div>
-
           <!-- menu profile quick info -->
           <div class="profile clearfix">
             <div class="profile_pic">
@@ -49,7 +48,13 @@
             </div>
             <div class="profile_info">
               <span>Welcome,</span>
-              <h2><?= $ud['username']; ?></h2>
+              <h2><?php 
+              if ($ud['role'] == 1){ ?>
+                Admin
+              <?php } else { ?>
+                Komisi 
+              <?php $ud['role']; } ?>
+              </h2>
             </div>
           </div>
           <!-- /menu profile quick info -->
@@ -61,33 +66,56 @@
             <div class="menu_section">
               <h3>General</h3>
               <ul class="nav side-menu">
-
+              <?php if ($this->session->userdata('admin_login')['role']== 3 || $this->session->userdata('admin_login')['role']== 1) { ?>
                 <li><a><i class="fa fa-edit"></i> Aspirasi Data <span class="fa fa-chevron-down"></span></a>
                   <ul class="nav child_menu">
                     <li><a href="<?php echo base_url() ?>admin/kategori">Category</a></li>
                     <li><a href="<?php echo base_url() ?>admin/aspirasi">Aspirasi</a></li>
                     <li><a href="<?php echo base_url() ?>admin/saran">Kotak Saran</a></li>
+                    <li><a href="<?php echo base_url() ?>admin/saran/email">Email Message</a></li>
                   </ul>
                 </li>
                 <li><a><i class="fa fa-table"></i> Histori Data <span class="fa fa-chevron-down"></span></a>
                   <ul class="nav child_menu">
                     <li><a href="<?php echo base_url() ?>admin/histori/aspirasi">Histori Aspirasi</a></li>
-                    <li><a href="<?php echo base_url() ?>admin/histori/saran">Histori Saran</a>
+                    <li><a href="<?php echo base_url() ?>admin/histori/saran">Histori Saran</a> 
                     <li><a href="<?php echo base_url() ?>admin/histori/log">Log</a></li>
                   </ul>
                 </li>
+              <?php } ?>
+              <?php if ($this->session->userdata('admin_login')['role']==4 || $this->session->userdata('admin_login')['role']==1 || $this->session->userdata('admin_login')['role']==2) { ?>
                 <li><a><i class="fa fa-desktop"></i> Publikasi Data <span class="fa fa-chevron-down"></span></a>
                   <ul class="nav child_menu">
-                    <li><a href="<?php echo base_url() ?>admin/galeri">Tambah Galeri</a></li>
-                    <li><a href="<?php echo base_url() ?>admin/peminjaman/index">Tambah Barang Peminjaman</a></li>
-                    <li><a href="<?php echo base_url() ?>admin/peminjaman/listPeminjaman">Tambah Peminjaman</a></li>
+                    <?php if ($this->session->userdata('admin_login')['role']==4 || $this->session->userdata('admin_login')['role']==1) { ?>
+                      <li><a href="<?php echo base_url() ?>admin/galeri">Tambah Galeri</a></li>
+                    <?php } ?>
+                    <?php if ($this->session->userdata('admin_login')['role']==2) { ?>
+                      <li><a href="<?php echo base_url() ?>admin/peminjaman/index">Tambah Barang Peminjaman</a></li>
+                      <li><a href="<?php echo base_url() ?>admin/peminjaman/listPeminjaman">Tambah Peminjaman</a></li>
+                    <?php } ?>
                   </ul>
                 </li>
+              <?php } ?>
+              <?php if ($this->session->userdata('admin_login')['role']==2 || $this->session->userdata('admin_login')['role']==1 || $this->session->userdata('admin_login')['role']==2) { ?>
+                <li><a><i class="fa fa-desktop"></i> Data Barang <span class="fa fa-chevron-down"></span></a>
+                  <ul class="nav child_menu">
+                      <li><a href="<?php echo base_url() ?>admin/peminjaman/index">Tambah Barang Peminjaman</a></li>
+                      <li><a href="<?php echo base_url() ?>admin/peminjaman/listPeminjaman">Tambah Peminjaman</a></li>
+                  </ul>
+                </li>
+                <li><a><i class="fa fa-desktop"></i> Data Oprec <span class="fa fa-chevron-down"></span></a>
+                  <ul class="nav child_menu">
+                      <li><a href="<?php echo base_url() ?>admin/oprec">Form Oprec</a></li>
+                  </ul>
+                </li>
+              <?php } ?>
+              <?php if($this->session->userdata('admin_login')['role']==1) { ?>
                 <li><a><i class="fa fa-desktop"></i> Users Data <span class="fa fa-chevron-down"></span></a>
                   <ul class="nav child_menu">
                     <li><a href="<?php echo base_url() ?>admin/users">List User</a></li>
                   </ul>
                 </li>
+              <?php } ?>
               </ul>
             </div>
           </div>
@@ -108,7 +136,7 @@
                   <img src="images/img.jpg" alt="">DPM
                 </a>
                 <div class="dropdown-menu dropdown-usermenu pull-right" aria-labelledby="navbarDropdown">
-                  <a class="dropdown-item" href="<?php echo base_url(); ?>login/logout"><i class="fa fa-sign-out pull-right"></i> Log Out</a>
+                  <a class="dropdown-item" href="<?php echo base_url(); ?>admin/users/logout"><i class="fa fa-sign-out pull-right"></i> Log Out</a>
                 </div>
               </li>
               <li role="presentation" class="nav-item dropdown open">

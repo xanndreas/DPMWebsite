@@ -11,6 +11,14 @@ class admin_model extends CI_Model
     {
         return $this->db->get_where($tabel, [$field_id => $id])->row();
     }
+     public function getASPbyStatus($tabel, $field_id, $id)
+    {
+        return $this->db->get_where($tabel, [$field_id => $id])->result();
+    }
+    public function getASPData($tabel, $field_id, $id)
+    {
+        return $this->db->get_where($tabel, [$field_id => $id])->result_array();
+    }
     public function getLastId($title, $table, $limit)
     {
         $this->db->order_by($title, 'desc');
@@ -52,6 +60,12 @@ class admin_model extends CI_Model
             $this->db->select($attr);
         }
         return $this->db->get($tabel);
+    }
+    public function getProdi()
+    {
+        $this->db->distinct();
+        $this->db->select('PRODI');
+        return $this->db->get('aspirasi_view')->result();
     }
     public function getASP()
     {

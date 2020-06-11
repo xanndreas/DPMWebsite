@@ -19,7 +19,7 @@
 <body>
     <div id="top_wrapper">
         <div class="container">
-            <div class="header_box">
+            <div class="header_box" style="margin-left:-80px">
                 <!--<div class="logo"><a href="#">Resume</a></div>-->
                 <div class="navbar navbar-inverse">
                     <div class="navbar-header">
@@ -29,16 +29,13 @@
                         <ul class="nav navbar-nav">
                             <li class="active"><a href="<?= base_url() ?>">Home</a></li>
                             <li><a href="<?= base_url(); ?>inventaris">Inventaris</a></li>
-                            <li><a href="">Sejarah</a></li>
-                            <li><a href="">Berita</a></li>
-                            <li><a href="">Agenda</a></li>
                             <li><a href="<?= base_url(); ?>aspirasi">Aspirasi</a></li>
-                            <li><a href="">Kontak</a></li>
+                            <li><a href="<?= base_url(); ?>oprec">Recruitment</a></li>
                             <?php if ($ud != null) { ?>
                                 <li><a href="<?= base_url(); ?>login/logout">Logout</a></li>
                                 <li>
                                     <!-- toggle -->
-                                    <a data-toggle="modal" data-target="#editpassword" href="">Ganti Passwword</a>
+                                    <a data-toggle="modal" data-target="#editpassword" href="">Akun</a>
                                     <!-- modal pop up -->
                                     <div class="modal fade" id="editpassword" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                         <div class="modal-dialog" role="document">

@@ -23,7 +23,7 @@ class Users extends CI_Controller
     {
         $data['ud'] = $this->session->userdata('admin_login');
         $data['main_view'] = 'admin/users';
-        $data['usrs'] = $this->a->get('users')->result();
+        $data['usrs'] = $this->a->get('users_prodi_view')->result();
         $this->load->view('admin/dashboard', $data);
     }
 
@@ -38,7 +38,13 @@ class Users extends CI_Controller
     public function del_user($nim)
     {
         $this->a->delete('NIM', $nim, 'users');
+        $this->session->set_flashdata('success',"Data success deleted");
         redirect("admin/users");
+    }
+    public function logout()
+    {
+        $this->session->sess_destroy();
+        redirect('admin');
     }
     public function edit_user()
     {
@@ -52,6 +58,7 @@ class Users extends CI_Controller
             'NIM' => $this->input->post('nim')
         );
         $this->a->updateDatas($where, $datas, "users");
+        $this->session->set_flashdata('success',"Success Update User");
         redirect("admin/users");
     }
 }

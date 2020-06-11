@@ -8,10 +8,7 @@
         <div class="title_right">
           <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
             <div class="input-group">
-              <input type="text" class="form-control" placeholder="Search for...">
-              <span class="input-group-btn">
-                <button class="btn btn-secondary" type="button">Go!</button>
-              </span>
+              
             </div>
           </div>
         </div>
@@ -31,6 +28,18 @@
             </div>
             <div class="x_content">
               <form action="<?php base_url(); ?>Galeri/ins_galeri" method="post" enctype="multipart/form-data" novalidate>
+              <?php 
+                  $data=$this->session->flashdata('success');
+                  if($data!=""){ ?>
+                  <div id="notifikasi" class="alert alert-success"><strong>Success!</strong> <?=$data;?></div>
+              <?php } ?>
+              
+              <?php 
+                  $data2=$this->session->flashdata('error');
+                  if($data2!=""){ ?>
+                  <div id="notifikasi" class="alert alert-danger"><strong> Error! </strong> <?=$data2;?></div>
+              <?php } ?>
+                
                 <div class="field item form-group">
                   <label class="col-form-label col-md-3 col-sm-3  label-align">Nama Acara<span class="required">*</span></label>
                   <div class="col-md-6 col-sm-6">
@@ -116,10 +125,11 @@
                             <td><?= $g->KONTEN; ?></td>
                             <td>
                               <a href="<?= base_url() ?>admin/galeri/del_galeri/<?= $g->GALERI_ID ?>">
-                                <button type="button" class="btn btn-sm btn-round btn-warning">Hapus</button>
+                                <button type="button" class="btn btn-sm btn-warning">Hapus</button>
                               </a>
-
-                              <button type="button" class="btn btn-sm btn-round btn-primary">Edit</button>
+                              <button type="button" class="btn btn-sm btn-info" data-toggle="modal" data-target="#editGaleri">
+                                  Edit
+                              </button>
                             </td>
 
                           </tr>
@@ -136,3 +146,46 @@
       </div>
     </div>
   </div>
+  <div class="modal fade" id="editGaleri" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                  <!-- modaledit -->
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Edit Data Galeri</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form action="<?= base_url(); ?>admin/Galeri/editGaleri" method="post" enctype="multipart/form-data" >
+                <div class="modal-body">
+                <input type="hidden" class="form-control" name="id" id="id" value="<?= $g->GALERI_ID; ?>" >
+                    <div class="form-group">
+                        <label for="namaacara">Nama Acara</label>
+                        <input class="form-control" data-validate-length-range="6" data-validate-words="2" name="namaacara" required="required" value="<?= $g->NAMA_ACARA; ?>" />
+                    </div>
+                    <div class="form-group">
+                        <label for="komisi">Komisi</label>
+                        <select id="komisi" name="komisi" class="form-control" required>
+                          <option value="1">Komisi 1</option>
+                          <option value="2">Komisi 2</option>
+                          <option value="3">Komisi 3</option>
+                          <option value="4">Komisi 4</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="kontenacara">Konten Acara</label>
+                        <textarea name="kontenacara" class="resizable_textarea form-control" placeholder="" required ><?= $g->KONTEN;?></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="namaacara">Upload Gambar</label>
+                        <input type="file" name="gambar" data-role="magic-overlay" data-target="" data-edit="insertImage" required />
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" name="edit" value="barangedit" class="btn btn-primary">Save changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

@@ -8,10 +8,7 @@
         <div class="title_right">
           <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
             <div class="input-group">
-              <input type="text" class="form-control" placeholder="Search for...">
-              <span class="input-group-btn">
-                <button class="btn btn-secondary" type="button">Go!</button>
-              </span>
+              
             </div>
           </div>
         </div>
@@ -31,6 +28,18 @@
             </div>
             <div class="x_content">
               <form class="" action="<?= base_url(); ?>admin/Peminjaman/ins_peminjaman" method="post" novalidate>
+              <?php 
+                      $data=$this->session->flashdata('success');
+                      if($data!=""){ ?>
+                      <div id="notifikasi" class="alert alert-success"><strong>Success!</strong> <?=$data;?></div>
+                  <?php } ?>
+                  
+                  <?php 
+                      $data2=$this->session->flashdata('error');
+                      if($data2!=""){ ?>
+                      <div id="notifikasi" class="alert alert-danger"><strong> Error! </strong> <?=$data2;?></div>
+                  <?php } ?>
+                
                 <div class="field item form-group">
                   <label class="col-form-label col-md-3 col-sm-3  label-align">Nama Peminjam<span class="required">*</span></label>
                   <div class="col-md-6 col-sm-6">
@@ -144,8 +153,9 @@
                             <th>Tanggal Peminjaman</th>
                             <th>Tanggal Pengembalian</th>
                             <th>Keperluan</th>
-                            <th>Jaminan</th>
+                            <th>Jaminan</th> 
                             <th>Status</th>
+                            <th>Action</th>
                           </tr>
                         </thead>
                         <tbody>
@@ -161,10 +171,12 @@
                               <td><?= $p->TANGGAL_PENGEMBALIAN; ?></td>
                               <td><?= $p->UNTUK_KEPERLUAN; ?></td>
                               <td><?= $p->JAMINAN; ?></td>
+                              <td><?= $p->STATUS; ?></td>
                               <td>
                                 <a class='btn btn-success btn-cls update' href='#' data-id="<?= $p->ID_PEMINJAMAN ?>" data-toggle='modal' data-target='#modal-detail'>
                                   <i class="fa fa-pencil"></i></a>
-                                <button type="button" class="btn-info">OK</button>
+                                <a class='btn btn-info btn-cls update' href='<?= base_url(); ?>admin/peminjaman/changeStatus/<?= $p->ID_PEMINJAMAN ?>'>OK
+                                  </a>
                               </td>
                             </tr>
                           <?php $n++;
@@ -187,13 +199,13 @@
                             <table id="datatable-checkbox" class="table table-striped table-bordered" style="width:100%">
                               <thead>
                                 <tr>
-                                  <th>no</th>
-                                  <th>alat</th>
-                                  <th>jumlah</th>
+                                  <th>Alat</th>
+                                  <th>Jumlah</th>
                                 </tr>
                               </thead>
                               <tbody id="polo"> 
-                               
+                              <td><?= $p->ALAT_NAMA; ?></td>
+                              <td><?= $p->JUMLAH; ?></td>
                               </tbody>
                             </table>
                           </div>

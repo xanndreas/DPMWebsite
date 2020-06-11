@@ -113,7 +113,7 @@ class Login extends CI_Controller
         $cek = $this->user->getWhere('admin', $n)->row();
 
         if ($cek != null) {
-            $userdata = array('username' => $cek->USERNAME);
+            $userdata = array('username' => $cek->USERNAME, 'role' => $cek->ROLE);
             $this->session->set_userdata('admin_login', $userdata);
             $datauser = $this->session->userdata('admin_login');
 

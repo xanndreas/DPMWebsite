@@ -8,10 +8,7 @@
             <div class="title_right">
                 <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
                     <div class="input-group">
-                        <input type="text" class="form-control" placeholder="Search for...">
-                        <span class="input-group-btn">
-                            <button class="btn btn-secondary" type="button">Go!</button>
-                        </span>
+                        
                     </div>
                 </div>
             </div>
@@ -36,6 +33,17 @@
                                         Users Data
                                     </p>
                                     <form action="<?= base_url(); ?>admin/users/handleAllAction" method="post">
+                                    <?php 
+                                        $data=$this->session->flashdata('success');
+                                        if($data!=""){ ?>
+                                        <div id="notifikasi" class="alert alert-success"><strong>Success!</strong> <?=$data;?></div>
+                                    <?php } ?>
+                                    
+                                    <?php 
+                                        $data2=$this->session->flashdata('error');
+                                        if($data2!=""){ ?>
+                                        <div id="notifikasi" class="alert alert-danger"><strong> Error! </strong> <?=$data2;?></div>
+                                    <?php } ?>
                                         <table id="datatable-checkbox" class="table table-striped table-bordered" style="width:100%">
                                             <thead>
                                                 <tr>
@@ -44,6 +52,7 @@
                                                     <th>NAMA</th>
                                                     <th>Password</th>
                                                     <th>Email</th>
+                                                    <th>Prodi</th>
                                                     <th>Action</th>
                                                 </tr>
                                             </thead>
@@ -56,6 +65,7 @@
                                                         <td> <?= $s->NAMA; ?> </td>
                                                         <td><?= $s->PASSWORD; ?></td>
                                                         <td><?= $s->EMAIL; ?></td>
+                                                        <td><?= $s->PRODI; ?></td>
                                                         <td>
                                                             <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#deleteUsers">
                                                                 delete
@@ -83,43 +93,7 @@
                                                             <button type="button" class="btn btn-sm btn-warning" data-toggle="modal" data-target="#editUsers">
                                                                 edit
                                                             </button>
-                                                            <!-- Modal -->
-                                                            <div class="modal fade" id="editUsers" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                                                <div class="modal-dialog" role="document">
-                                                                    <div class="modal-content">
-                                                                        <div class="modal-header">
-                                                                            <h5 class="modal-title" id="exampleModalLabel">Edit user</h5>
-                                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                                                <span aria-hidden="true">&times;</span>
-                                                                            </button>
-                                                                        </div>
-                                                                        <form action="<?= base_url(); ?>admin/users/handleAllAction" method="post">
-                                                                            <div class="modal-body">
-                                                                                <div class="form-group">
-                                                                                    <label for="NIMinput">NIM</label>
-                                                                                    <input type="text" class="form-control" name="nim" id="niminput" value="<?= $s->NIM; ?>">
-                                                                                </div>
-                                                                                <div class="form-group">
-                                                                                    <label for="namainput">Nama</label>
-                                                                                    <input type="text" class="form-control" name="nama" id="namainput" value="<?= $s->NAMA; ?>">
-                                                                                </div>
-                                                                                <div class="form-group">
-                                                                                    <label for="passwordinput">Password</label>
-                                                                                    <input type="password" class="form-control" name="password" id="passwordinput" value="<?= $s->PASSWORD; ?>">
-                                                                                </div>
-                                                                                <div class="form-group">
-                                                                                    <label for="emailinput">Email</label>
-                                                                                    <input type="email" class="form-control" name="email" id="emailinput" value="<?= $s->EMAIL; ?>">
-                                                                                </div>
-                                                                            </div>
-                                                                            <div class="modal-footer">
-                                                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                                                                <button type="submit" name="edit" value="userdatas" class="btn btn-primary">Save changes</button>
-                                                                            </div>
-                                                                        </form>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
+                                                            
                                                         </td>
                                                     </tr>
                                                 <?php $a++;
@@ -133,6 +107,43 @@
                     </div>
                 </div>
             </div>
+        </div>
+    </div>
+</div>
+<!-- Modal -->
+<div class="modal fade" id="editUsers" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Edit user</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form action="<?= base_url(); ?>admin/users/handleAllAction" method="post">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="NIMinput">NIM</label>
+                        <input type="text" class="form-control" name="nim" id="niminput" value="<?= $s->NIM; ?>">
+                    </div>
+                    <div class="form-group">
+                        <label for="namainput">Nama</label>
+                        <input type="text" class="form-control" name="nama" id="namainput" value="<?= $s->NAMA; ?>">
+                    </div>
+                    <div class="form-group">
+                        <label for="passwordinput">Password</label>
+                        <input type="password" class="form-control" name="password" id="passwordinput" value="<?= $s->PASSWORD; ?>">
+                    </div>
+                    <div class="form-group">
+                        <label for="emailinput">Email</label>
+                        <input type="email" class="form-control" name="email" id="emailinput" value="<?= $s->EMAIL; ?>">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" name="edit" value="userdatas" class="btn btn-primary">Save changes</button>
+                </div>
+            </form>
         </div>
     </div>
 </div>

@@ -8,10 +8,7 @@
         <div class="title_right">
           <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
             <div class="input-group">
-              <input type="text" class="form-control" placeholder="Search for...">
-              <span class="input-group-btn">
-                <button class="btn btn-secondary" type="button">Go!</button>
-              </span>
+             
             </div>
           </div>
         </div>
@@ -31,6 +28,18 @@
             </div>
             <div class="x_content">
               <form class="" action="<?= base_url(); ?>admin/kategori/ins_kategori" method="post" novalidate>
+                 <!--flashedit-->
+                 <?php 
+                      $data=$this->session->flashdata('success');
+                      if($data!=""){ ?>
+                      <div id="notifikasi" class="alert alert-success"><strong>Success!</strong> <?=$data;?></div>
+                  <?php } ?>
+                  
+                  <?php 
+                      $data2=$this->session->flashdata('error');
+                      if($data2!=""){ ?>
+                      <div id="notifikasi" class="alert alert-danger"><strong> Error! </strong> <?=$data2;?></div>
+                  <?php } ?>
                 <div class="field item form-group">
                   <label class="col-form-label col-md-3 col-sm-3  label-align">Nama Kategori<span class="required">*</span></label>
                   <div class="col-md-6 col-sm-6">

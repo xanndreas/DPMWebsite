@@ -30,7 +30,7 @@ class Peminjaman extends CI_Controller
 		$data['ud'] = $this->session->userdata('admin_login');
 		$data['main_view'] = 'admin/peminjaman';
 		$data['a'] = $this->a->get('list_alat')->result();
-		$data['pj'] = $this->a->get('plot')->result();
+		$data['pj'] = $this->a->get('peminjaman_view')->result();
 		
 		$this->load->view('admin/dashboard', $data);
 	}
@@ -63,6 +63,7 @@ class Peminjaman extends CI_Controller
 			'TANGGAL_PENGEMBALIAN'	=>	$time3,
 			'UNTUK_KEPERLUAN'		=>	$this->input->post('keperluan'),
 			'JAMINAN'				=>	$this->input->post('jaminan'),
+			'STATUS'				=> "N"
 		);
 		$this->a->insert('plot', $arr);
 
@@ -88,13 +89,43 @@ class Peminjaman extends CI_Controller
 
 	public function ins_barangP()
 	{
-		$arr = array(
-			'ALAT_NAMA'		=>	$this->input->post('namabarang'),
-			'JUMLAH_ALAT'	=>	$this->input->post('jumlah'),
-		);
-		$this->a->insert('list_alat', $arr);
-		redirect("admin/Peminjaman");
+		$this->form_validation->set_rules('namabarang', 'Nama Barang', 'required');
+		$this->form_validation->set_rules('jumlah', 'Jumlah', 'required','numeric');
+		if($this->form_validation->run()==FALSE){
+			$this->session->set_flashdata('error',"Data Gagal ditambahkan");
+			redirect("admin/Peminjaman");
+		} else {
+			$arr = array(
+				'ALAT_NAMA'		=>	$this->input->post('namabarang'),
+				'JUMLAH_ALAT'	=>	$this->input->post('jumlah'),
+			);
+			if($this->a->insert('list_alat', $arr)==TRUE){
+				$this->session->set_flashdata('success',"Data Berhasil ditambahkan");
+				redirect("admin/Peminjaman");
+			} else {
+				$this->session->set_flashdata('error',"Data Gagal ditambahkan");
+				redirect("admin/Peminjaman");
+			}
+		}
 	}
+	public function handleAllAction()
+    {
+        if ($_POST['edit'] == "barangedit") {
+            $this->edit_barang();
+        }
+	}
+	public function edit_barang()
+    {
+        $datas = array(
+            'ALAT_NAMA' => $this->input->post('namabarang'),
+            'JUMLAH_ALAT' => $this->input->post('jumlah')
+        );
+        $where = array(
+            'ALAT_ID' => $this->input->post('id')
+        );
+        $this->a->updateDatas($where, $datas, "list_alat");
+        redirect("admin/Peminjaman");
+    }
 
 	public function del_peminjaman()
 	{
@@ -129,6 +160,22 @@ class Peminjaman extends CI_Controller
 			$this->del_peminjaman();
 		} else if ($value == "print") {
 			$this->print_barang();
+		}
+	}
+	public function changeStatus($id)
+	{
+		$datas = array(
+            'STATUS' => "Y"
+		);
+		$where = array(
+            'ID_PEMINJAMAN' => $id
+        );
+		if($this->a->update("plot",$datas,$where)==TRUE){
+			$this->session->set_flashdata('success',"Status OK");
+			redirect("admin/peminjaman/listPeminjaman");
+		} else {
+			$this->session->set_flashdata('error',"Status gagal diubah");
+			redirect("admin/peminjaman/listPeminjaman");
 		}
 	}
 	public function print_barang()

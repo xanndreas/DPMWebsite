@@ -28,6 +28,13 @@ class Saran extends CI_Controller
 		$data['srn'] = $this->a->getJoinWhere($tabel, $joinTabel, $joinOn, $where, $whereClause, $attr)->result();
 		$this->load->view('admin/dashboard', $data);
 	}
+	public function email()
+    {
+        $data['ud'] = $this->session->userdata('admin_login');
+        $data['main_view'] = 'admin/email';
+        $data['email'] = $this->a->get('email')->result();
+        $this->load->view('admin/dashboard', $data);
+    }
 
 	public function handleAllAction()
 	{
@@ -46,7 +53,10 @@ class Saran extends CI_Controller
 			for ($i = 0; $i < $jl; $i++) {
 				$this->a->delete('SARAN_ID', $dt[$i], 'saran');
 			}
+			$this->session->set_flashdata('success',"Saran Success Deleted");
+			redirect('admin/saran');
 		} else {
+			$this->session->set_flashdata('error',"Gagal delete");
 			redirect('admin/saran');
 		}
 	}

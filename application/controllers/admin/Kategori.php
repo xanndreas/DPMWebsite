@@ -31,6 +31,7 @@
 				'TUJUAN' => $this->input->post('tujuan')
 			);
 			$this->a->insert('kategori', $ins);
+			$this->session->set_flashdata('success',"Success Tambah Kategori");
 			redirect('admin/Kategori');
 		}
 
@@ -42,7 +43,7 @@
 			for ($i = 0; $i < $jl; $i++) {
 				$this->a->delete('KAT_ID', $dt[$i], 'kategori');
 			}
-
+			$this->session->set_flashdata('success',"Success Delete Kategori");
 			redirect('admin/Kategori');
 		}
 	}

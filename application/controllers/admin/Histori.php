@@ -43,7 +43,8 @@ class Histori extends CI_Controller
 	{
 		$data['ud'] = $this->session->userdata('admin_login');
 		$data['main_view'] = 'admin/log';
-		$data['log'] = $this->a->get('log')->result();
+		$id = 1;
+		$data['asp'] = $this->a->getASPbyStatus('aspirasi_view','DELETED_STATUS',$id);
 		$this->load->view('admin/dashboard', $data);
 	}
 	public function handleAllAction($req = null)
@@ -62,6 +63,21 @@ class Histori extends CI_Controller
 			}
 		}
 		redirect('admin/histori/aspirasi');
+	}
+	public function del_log()
+	{
+		$dt = $this->input->post('pilih');
+		$jl = count($dt);
+		if ($jl != 0) {
+			for ($i = 0; $i < $jl; $i++) {
+				$this->a->delete('ASP_ID', $dt[$i], 'aspirasi');
+			}
+		} else {
+			redirect('admin/histori/log');
+		}
+		$this->session->set_flashdata('success',"Success Delete Aspirasi");
+		redirect('admin/histori/log');
+
 	}
 
 	//aspirasi function

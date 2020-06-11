@@ -8,10 +8,7 @@
         <div class="title_right">
           <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
             <div class="input-group">
-              <input type="text" class="form-control" placeholder="Search for...">
-              <span class="input-group-btn">
-                <button class="btn btn-secondary" type="button">Go!</button>
-              </span>
+              
             </div>
           </div>
         </div>
@@ -37,6 +34,18 @@
                       Data Histori Aspirasi
                     </p>
                     <form action="<?= base_url(); ?>admin/histori/handleAllAction/<?= $handleType ?>" method="post">
+                        <!--flashedit-->
+                      <?php 
+                          $data=$this->session->flashdata('success');
+                          if($data!=""){ ?>
+                          <div id="notifikasi" class="alert alert-success"><strong>Success!</strong> <?=$data;?></div>
+                      <?php } ?>
+                      
+                      <?php 
+                          $data2=$this->session->flashdata('error');
+                          if($data2!=""){ ?>
+                          <div id="notifikasi" class="alert alert-danger"><strong> Error! </strong> <?=$data2;?></div>
+                      <?php } ?>
                       <table id="datatable-checkbox" class="table table-striped table-bordered" style="width:100%">
                         <thead>
                           <tr>

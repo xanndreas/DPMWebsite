@@ -8,10 +8,7 @@
               <div class="title_right">
                 <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
                   <div class="input-group">
-                    <input type="text" class="form-control" placeholder="Search for...">
-                    <span class="input-group-btn">
-                      <button class="btn btn-secondary" type="button">Go!</button>
-                    </span>
+                    
                   </div>
                 </div>
               </div>
@@ -36,29 +33,48 @@
                           <p class="text-muted font-13 m-b-30">
                             Data Log
                           </p>
+                          <form action="<?= base_url(); ?>admin/histori/del_log" method="POST">
+                        <!--flashedit-->
+                      <?php 
+                          $data=$this->session->flashdata('success');
+                          if($data!=""){ ?>
+                          <div id="notifikasi" class="alert alert-success"><strong>Success!</strong> <?=$data;?></div>
+                      <?php } ?>
+                      
+                      <?php 
+                          $data2=$this->session->flashdata('error');
+                          if($data2!=""){ ?>
+                          <div id="notifikasi" class="alert alert-danger"><strong> Error! </strong> <?=$data2;?></div>
+                      <?php } ?>
                           <table id="datatable-checkbox" class="table table-striped table-bordered" style="width:100%">
                             <thead>
                               <tr>
                                 <th>Check</th>
                                 <th>No</th>
-                                <th>Admin</th>
+                                <th>NIM</th>
+                                <th>Kategori</th>
+                                <th>Prodi</th>
+                                <th>Konten</th>
                                 <th>Tanggal</th>
-                                <th>ID Terhapus</th>
                               </tr>
                             </thead>  
                             <tbody>
-                              <?php $n=1; foreach ($log as $k) :?>
-                              <tr>
-                                <td><input type="checkbox" id="check-all" > </td>
-                                <td>1</td>
-                                <td>Lael Greer</td>
-                                <td>Systems Administrator</td>
-                                <td>London</td>
-                              </tr>
-                             <?php $n++; endforeach?>
+                                <?php $n = 1;
+                              foreach ($asp as $a) : ?>
+                                <tr>
+                                  <td><input type="checkbox" name="pilih[]" value="<?= $a->ASP_ID; ?>"> </td>
+                                  <td><?= $n; ?> </td>
+                                  <td><?= $a->NIM; ?> </td>
+                                  <td><?= $a->KAT_NAMA; ?> </td>
+                                  <td><?= $a->PRODI; ?> </td>
+                                  <td><?= $a->KONTEN; ?> </td>
+                                  <td><?= $a->DATE; ?> </td>
+                                </tr>
+                              <?php $n++;
+                              endforeach ?>
                             </tbody>
                           </table>
-                          <button type="button" class="btn btn-round btn-warning" style="margin-left: 15px">Hapus</button>
+                          <button type="submit" class="btn btn-round btn-warning" style="margin-left: 15px">Hapus</button>
                         </div>
                         </div>
                     </div>
